@@ -1,0 +1,35 @@
+
+{
+    "products": [
+        {
+            "id": 1,
+            "name": "Produto 1",
+            "color": "Azul",
+            "price": 10.0,
+            "stock": 10,
+            "code": "123",
+            "publish": true,
+            "creationDate": "2021-01-01"
+        },
+        {
+            "id": 2,
+            "name": "Produto 2",
+            "color": "Vermelho",
+            "price": 20.0,
+            "stock": 20,
+            "code": "456",
+            "publish": true,
+            "creationDate": "2021-01-02"
+        },
+        {
+            "id": 3,
+            "name": "Produto 3",
+            "color": "Verde",
+            "price": 30.0,
+            "stock": 30,
+            "code": "789",
+            "publish": true,
+            "creationDate": "2021-01-03"
+        }
+    ]
+}
