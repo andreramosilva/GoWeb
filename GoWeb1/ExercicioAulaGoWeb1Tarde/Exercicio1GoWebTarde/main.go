@@ -1,5 +1,5 @@
 // Exercício 1 - Vamos filtrar nosso endpoint
-// Dependendo do tema escolhido, precisamos adicionar filtros ao nosso endpoint, ele deve ser capaz de filtrar todos os campos.
+// precisamos adicionar filtros ao nosso endpoint, ele deve ser capaz de filtrar todos os campos.
 
 // Dentro do manipulador de endpoint, recebi os valores para filtrar do contexto.
 // Em seguida, ele gera a lógica do filtro para nossa matriz.
@@ -8,6 +8,11 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -30,28 +35,31 @@ func RootPage(c *gin.Context) {
 
 func SearchProduct(c *gin.Context) {
 	id := c.Param("id")
-	c.JSON(200, gin.H{
-		"message": "Produto encontrado",
-		"id":      id,
+	file, err := os.ReadFile("../../products.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	var products []product
+	err = json.Unmarshal(file, &products)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	for _, product := range products {
+		y, _ := strconv.Atoi(id)
+		print(y)
+		if product.Id == y {
+			c.JSON(200, product)
+			return
+		}
+	}
+	c.JSON(404, gin.H{
+		"message": "Product not found",
 	})
+
 }
 
 func main() {
-	// jsonData := `[{"id":1,"name":"Product 1","color":"Red","price":10.5,"stock":100,"code":"ABC123","publish":true,"creationDate":"2021-01-01"},{"id":2,"name":"Product 2","color":"Blue","price":20.5,"stock":200,"code":"DEF456","publish":false,"creationDate":"2021-01-02"}]`
-
-	// var p []product
-	// err := json.Unmarshal([]byte(jsonData), &p)
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// router := gin.Default()
-	// router.GET("/ping", func(c *gin.Context) {
-	// 	c.JSON(200, gin.H{
-	// 		"data": p,
-	// 	})
-	// })
-	// router.Run(":8080")
 
 	server := gin.Default()
 	server.GET("/", RootPage)
