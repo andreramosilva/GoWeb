@@ -35,21 +35,18 @@ func RootPage(c *gin.Context) {
 
 func SearchProduct(c *gin.Context) {
 	id := c.Param("id")
-	file, err := os.ReadFile("../../products.json")
-	if err != nil {
-		fmt.Println(err)
-	}
+	jsonData, _ := os.ReadFile("../../products.json")
+
 	var products []product
-	err = json.Unmarshal(file, &products)
+	err := json.Unmarshal([]byte(jsonData), &products)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	for _, product := range products {
+	for _, prod := range products {
 		y, _ := strconv.Atoi(id)
-		print(y)
-		if product.Id == y {
-			c.JSON(200, product)
+		if prod.Id == y {
+			c.JSON(200, prod)
 			return
 		}
 	}
